@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+/* Importación del tema oscuro premium de PrimeNG */
+@import "primeng/resources/themes/lara-dark-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+
+/* Estilos globales para acoplar la pantalla al modo oscuro */
+body {
+  margin: 0;
+  font-family: var(--font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  background-color: #0f172a; /* Fondo azul oscuro profundo institucional */
+  color: #f8fafc;
+}

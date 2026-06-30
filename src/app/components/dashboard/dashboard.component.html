@@ -1,0 +1,284 @@
+<div class="dashboard-layout">
+  <!-- Barra Superior -->
+  <header class="top-bar">
+    <div class="brand">
+      <i class="pi pi-wallet brand-icon"></i>
+      <span>SISTEMA DE ÓRDENES DE PAGO</span>
+    </div>
+    <div class="user-info" *ngIf="usuarioActivo">
+      <span class="user-name"><i class="pi pi-user icon-user"></i> {{ usuarioActivo.nombre }}</span>
+      <span class="badge-ventanilla">Ventanilla {{ usuarioActivo.ventanilla_id }}</span>
+      <button pButton icon="pi pi-sign-out" label="Salir" class="p-button-danger p-button-sm" (click)="onLogout()"></button>
+    </div>
+  </header>
+
+  <!-- Historial Principal -->
+  <main class="content-container">
+    <div class="welcome-card">
+            <!-- Fila de Encabezado Corporativo Mejorada con el Buscador al lado del Botón -->
+      <div class="workspace-header">
+        <div class="title-block">
+          <h2 class="section-main-title">Historial General de Órdenes</h2>
+          <p class="section-sub-title">Monitoreo y emisión de comprobantes de pago en tiempo real.</p>
+        </div>
+        
+        <!-- Bloque de acciones alineadas a la derecha -->
+                <!-- Bloque de acciones alineadas a la derecha -->
+        <div class="header-actions-group">
+          
+          <!-- Buscador de Empresas Naranja -->
+          <span class="p-input-icon-left filter-company-box">
+            <i class="pi pi-search search-bar-icon-orange"></i>
+            <input 
+              pInputText 
+              type="text" 
+              (input)="dt.filter($any($event.target).value, 'empresa.razon_social', 'contains')" 
+              placeholder="Buscar por Empresa..." 
+              class="p-inputtext-sm search-input-orange"/>
+          </span>
+
+          <!-- BOTÓN CAMBIADO A VERDE (p-button-success) -->
+          <button 
+            pButton 
+            icon="pi pi-plus-circle" 
+            label="Nueva Orden de Pago" 
+            class="p-button-rounded p-button-success action-main-btn" 
+            (click)="abrirFormulario()">
+          </button>
+          
+        </div> 
+
+      </div>
+
+
+      <!-- Tabla de Órdenes -->
+            <!-- TABLA PREMIUM CON PAGINACIÓN FLUIDA CADA 6 REGISTROS -->
+      <p-table 
+        #dt
+        [value]="ordenes" 
+        [paginator]="true" 
+        [rows]="6" 
+        [rowsPerPageOptions]="[6, 12, 24]"
+        [loading]="loading" 
+        [globalFilterFields]="['numero_orden', 'empresa.razon_social', 'codigo_misa']"
+        styleClass="p-datatable-customers custom-corporate-table">
+
+        <!-- Cabecera de la Tabla -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 10%">Nº ORDEN</th>
+            <th style="width: 11%">FECHA EMISIÓN</th>
+            <th style="width: 23%">EMPRESA / RAZÓN SOCIAL</th>
+            <th style="width: 23%">CONCEPTO ARANCEL</th>
+            <th style="width: 11%">CÓDIGO MISA</th>
+            <th style="width: 10%; text-align: right;">TOTAL MONTO</th>
+            <th style="width: 8%; text-align: center;">ESTADO</th>
+            <th style="width: 4%; text-align: center;">ACCIONES</th> <!-- 1. AGREGA ESTA LÍNEA -->
+          </tr>
+        </ng-template>
+       <!-- Filas de Datos Estilizadas -->
+<ng-template pTemplate="body" let-orden>
+  <tr class="table-row-hover">
+    <td>
+      <span class="order-number-badge">#{{ orden.numero_orden }}</span>
+    </td>
+    <td class="text-secondary-data">
+      <i class="pi pi-calendar-times icon-inline"></i>
+      {{ orden.fecha | date:'dd/MM/yyyy' }}
+    </td>
+    <td>
+      <div class="company-name-cell">
+        <span class="company-title">{{ orden.empresa?.razon_social }}</span>
+        <span class="company-subtext">NIT: {{ orden.empresa?.nit || 'S/N' }}</span>
+      </div>
+    </td>
+
+    <!-- 2. AGREGA ESTA NUEVA CELDA AQUÍ ABAJO -->
+    <td>
+      <div class="arancel-name-cell">
+        <span class="font-semibold text-slate-300">{{ orden.arancel?.nombre_arancel }}</span>
+        <span class="block text-11 text-muted-pad">Monto Unitario: Bs. {{ orden.monto_unitario }} (Cant: {{
+          orden.cantidad }})</span>
+      </div>
+    </td>
+
+    <td>
+      <span class="misa-code-box" *ngIf="orden.codigo_misa; else noMisa">
+        <i class="pi pi-tag icon-inline"></i> {{ orden.codigo_misa }}
+      </span>
+      <ng-template #noMisa><span class="text-italic-muted">Sin código</span></ng-template>
+    </td>
+    <td style="text-align: right;">
+      <span class="amount-currency-value">Bs. {{ orden.monto_total | number:'1.2-2' }}</span>
+    </td>
+    <td style="text-align: center;">
+      <span class="corporate-badge" [ngClass]="{
+        'badge-state-pendiente': orden.estado === 'PENDIENTE',
+        'badge-state-entregado': orden.estado === 'ENTREGADO',
+        'badge-state-anulado': orden.estado === 'ANULADO'
+      }">
+        <span class="badge-dot"></span>
+        {{ orden.estado }}
+      </span>
+    </td>
+<!-- 2. NUEVA CELDA CON EL BOTÓN IMPRIMIR ESTILIZADO -->
+ <!-- Celda de Acciones con el evento Click Vinculado -->
+            <td style="text-align: center;">
+              <button 
+                pButton 
+                type="button"
+                icon="pi pi-print" 
+                pTooltip="Imprimir Comprobante"
+                tooltipPosition="top"
+                class="p-button-rounded p-button-text p-button-info btn-table-print"
+                (click)="imprimirOrden(orden.id)"> <!-- <- ASEGÚRATE DE PONER ESTA LÍNEA -->
+              </button>
+            </td>
+
+
+  </tr>
+</ng-template>
+
+      </p-table>
+    </div>
+  </main>
+
+  <!-- FORMULARIO EMERGENTE MODERNO (IGUAL A TU CAPTURA DE PANTALLA) -->
+    <!-- FORMULARIO EMERGENTE MEJORADO AL 100% -->
+  <p-dialog 
+  header="Orden de Pago" 
+  [(visible)]="displayFormulario" 
+  [modal]="true" 
+  [style]="{width: '850px'}" 
+  [contentStyle]="{'overflow': 'visible'}"
+  styleClass="formulario-oscuro-dialog" 
+  [draggable]="false" 
+  [resizable]="false">
+
+    <p class="subtitle-dialog">Registro de servicio por registro sanitario</p>
+    
+    <div class="form-dark-body">
+      <!-- Fila Superior: Ventanilla Dinámica y Fecha -->
+             <!-- Fila Superior Refinada: Solo el número de ventanilla a la izquierda y la fecha a la derecha -->
+            <!-- Fila Superior: Se remueve la palabra en blanco y el recuadro queda limpio -->
+      <div class="form-row-inline">
+        <div class="field-box visual-box">
+          <label>FECHA DE EMISIÓN</label>
+          <div class="box-value justify-between-val">
+            <span>{{ fechaActual }}</span>
+            <i class="pi pi-calendar text-muted"></i>
+          </div>
+        </div>
+      </div>
+
+
+
+
+            
+            <!-- Sección Identificación con el número de orden corregido -->
+      <p class="section-title">IDENTIFICACIÓN</p>
+      <div class="form-row-inline">
+        <div class="field-box visual-box highlight-box">
+          <label>ORDEN DE PAGO</label>
+          <!-- Cambiamos el número fijo por un indicador de sistema automático -->
+          <div class="box-value text-orange-num" style="font-size: 13px;">
+            <i class="pi pi-cog pi-spin mr-2"></i>Automático
+          </div>
+        </div>
+        <div class="field-box visual-box">
+          <label>CÓDIGO MISA</label>
+          <input 
+            pInputText 
+            type="text" 
+            [(ngModel)]="codigoMisa" 
+            placeholder="Código automático o manual..." 
+            class="w-full input-dark-misa font-bold">
+        </div>
+      </div>
+
+
+
+        <!-- SECCIÓN EMPRESA -->
+      <p class="section-title">EMPRESA</p>
+      <div class="field-box">
+        <label>EMPRESA</label>
+        <div class="input-with-btn-group">
+          <p-dropdown 
+            [options]="empresas" 
+            [(ngModel)]="empresaSeleccionada" 
+            optionLabel="razon_social" 
+            placeholder="Escriba el nombre..." 
+            [filter]="true" 
+            filterBy="razon_social" 
+            styleClass="w-full input-dark-element-refined">
+          </p-dropdown>
+          <button pButton type="button" label="+ Nuevo" class="p-button-outlined p-button-secondary inline-action-btn"></button>
+        </div>
+      </div>
+
+           <!-- SECCIÓN ARANCEL CORREGIDA -->
+      <p class="section-title">ARANCEL</p>
+      <div class="field-box">
+        <label>ARANCEL</label>
+        <div class="input-with-btn-group">
+          <p-dropdown 
+            [options]="aranceles" 
+            [(ngModel)]="arancelSeleccionado" 
+            optionLabel="nombre_arancel" 
+            placeholder="Buscar arancel..." 
+            [filter]="true" 
+            filterBy="nombre_arancel" 
+            (onChange)="calcularTotal()" 
+            [autoDisplayFirst]="false"
+            appendTo="body"
+            styleClass="w-full input-dark-element-refined">
+          </p-dropdown>
+          <button pButton type="button" label="+ Nuevo" class="p-button-outlined p-button-secondary inline-action-btn"></button>
+        </div>
+      </div>
+
+
+      <p class="section-title">DESCRIPCIÓN Y MONTO</p>
+      <div class="field-box mb-3">
+        <label>DESCRIPCIÓN ADICIONAL</label>
+        <input pInputText type="text" [(ngModel)]="descripcion" placeholder="Información adicional..." class="w-full input-dark-element-refined text-field-pad">
+      </div>
+
+      <div class="form-row-inline">
+        <div class="field-box max-w-quantity-box">
+          <label>CANTIDAD</label>
+          <input pInputText type="number" [(ngModel)]="cantidad" (input)="calcularTotal()" min="1" class="class-qty-input w-full input-dark-element-refined">
+        </div>
+        <div class="field-box total-display-box-refined">
+          <label>MONTO TOTAL (BS.)</label>
+          <div class="total-row-refined">
+            <span class="total-label-refined">TOTAL</span>
+            <span class="total-value-refined">{{ montoTotal | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+            <!-- Sección del Literal Dinámico -->
+      <p class="section-title">LITERAL</p>
+      <div class="field-box literal-container-box">
+        <div class="literal-pill-display">
+          <!-- Mostramos la variable reactiva en lugar del guion -->
+          <span class="literal-dash" style="font-size: 13px;">{{ textoLiteral }}</span>
+        </div>
+      </div>
+
+
+      <!-- Botones de Control Final -->
+      <div class="actions-row-refined">
+        <button pButton label="Cancelar" class="p-button-text p-button-secondary corporate-cancel-btn" (click)="displayFormulario = false"></button>
+        <!-- 1. NUEVO BOTÓN DE LIMPIAR CON ICONO DE ESCOBA/BORRAR -->
+        <button pButton type="button" icon="pi pi-refresh" label="Limpiar" class="p-button-outlined p-button-warning corporate-clear-btn" (click)="limpiarFormulario()"></button>
+        <button pButton icon="pi pi-save" label="Guardar orden" class="p-button-outlined corporate-save-btn-refined" (click)="guardarOrden()"></button>
+      </div>
+    </div>
+  </p-dialog>
+<!-- Componente global que se activa al confirmar la orden -->
+<p-confirmDialog [style]="{width: '420px'}" styleClass="confirmacion-oscura-dialog"></p-confirmDialog>
+
+</div>
+
