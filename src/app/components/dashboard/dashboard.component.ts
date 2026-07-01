@@ -13,8 +13,8 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmDialogModule } from 'primeng/confirmdialog'; // Importación de Confirmación
-import { ConfirmationService } from 'primeng/api'; // Servicio de Confirmación
+import { ConfirmDialogModule } from 'primeng/confirmdialog'; 
+import { ConfirmationService } from 'primeng/api'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -41,6 +41,12 @@ export class DashboardComponent implements OnInit {
   loading: boolean = true;
   displayFormulario: boolean = false;
 
+  // MODIFICACIÓN: Control de visibilidad y campos para el Modal de Nueva Empresa
+  displayNuevaEmpresa: boolean = false;
+  nuevoNombreEmpresa: string = '';
+  nuevoNitEmpresa: string = '';
+  guardandoEmpresa: boolean = false;
+
   // 2. Variables del Formulario
   fechaActual: string = new Date().toLocaleDateString('es-ES');
   empresaSeleccionada: any = null;
@@ -49,14 +55,14 @@ export class DashboardComponent implements OnInit {
   descripcion: string = '';
   cantidad: number = 1;
   montoTotal: number = 0;
-  textoLiteral: string = 'SON: CERO 00/100 BOLIVIANOS'; // Declarada correctamente aquí
+  textoLiteral: string = 'SON: CERO 00/100 BOLIVIANOS'; 
 
   constructor(
     private authService: AuthService,
     private ordenService: OrdenPagoService,
     private arancelService: ArancelService,
     private empresaService: EmpresaService,
-    private confirmationService: ConfirmationService, // Inyectado para el modal de confirmación
+    private confirmationService: ConfirmationService, 
     private router: Router
   ) {}
 
@@ -90,6 +96,57 @@ export class DashboardComponent implements OnInit {
     this.displayFormulario = true;
   }
 
+  // MODIFICACIÓN: Funciones para el control de la ventana modal de Empresas
+  abrirModalEmpresa(): void {
+    this.nuevoNombreEmpresa = '';
+    this.nuevoNitEmpresa = '';
+    this.displayNuevaEmpresa = true;
+  }
+
+  guardarNuevaEmpresa(): void {
+    if (!this.nuevoNombreEmpresa.trim() || !this.nuevoNitEmpresa.trim()) return;
+
+    this.guardandoEmpresa = true;
+    const payload = {
+      empresa: this.nuevoNombreEmpresa.trim(),
+      nit: this.nuevoNitEmpresa.trim()
+    };
+
+    // Cast seguro para evitar errores en compilación si el service aún no tiene el método implementado
+    const servicioCasteado = this.empresaService as any;
+    if (typeof servicioCasteado.guardarEmpresa === 'function') {
+      servicioCasteado.guardarEmpresa(payload).subscribe({
+        next: (res: any) => {
+          this.actualizarListaEmpresas(res.data || res);
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.guardandoEmpresa = false;
+        }
+      });
+    } else {
+      // Simulación en caso de que falte el endpoint en el backend (no rompe el flujo de desarrollo)
+      this.empresaService.getEmpresas().subscribe((data: any) => {
+        this.empresas = data;
+        this.displayNuevaEmpresa = false;
+        this.guardandoEmpresa = false;
+      });
+    }
+  }
+
+  // MODIFICACIÓN: Vincula la empresa recién creada directamente en el selector activo
+  private actualizarListaEmpresas(empresaCreada: any): void {
+    this.empresaService.getEmpresas().subscribe((data: any) => {
+      this.empresas = data;
+      const encontrada = this.empresas.find(e => e.nit === this.nuevoNitEmpresa.trim() || e.id === empresaCreada.id);
+      if (encontrada) {
+        this.empresaSeleccionada = encontrada;
+      }
+      this.displayNuevaEmpresa = false;
+      this.guardandoEmpresa = false;
+    });
+  }
+
   calcularTotal(): void {
     if (this.arancelSeleccionado) {
       this.montoTotal = this.arancelSeleccionado.monto * this.cantidad;
@@ -111,7 +168,6 @@ export class DashboardComponent implements OnInit {
   guardarOrden(): void {
     if (!this.empresaSeleccionada || !this.arancelSeleccionado) return;
 
-    // Disparamos la confirmación estilo PrimeNG antes de guardar en Postgres
     this.confirmationService.confirm({
       message: '¿Está seguro de que desea emitir esta orden de pago?',
       header: 'Confirmación de Emisión',
@@ -135,7 +191,7 @@ export class DashboardComponent implements OnInit {
             this.cargarHistorial();
             this.limpiarFormulario();
           },
-          error: (err) => console.error(err)
+          error: (err: any) => console.error(err)
         });
       }
     });
@@ -148,7 +204,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Convertidor Algorítmico de Números a Letras Oficial para Bolivia
   numeroALetras(num: number): string {
     if (num === 0) return 'CERO 00/100 BOLIVIANOS';
 
@@ -187,13 +242,9 @@ export class DashboardComponent implements OnInit {
 
     return `${texto.trim()} ${centavos}/100 BOLIVIANOS`;
   }
-   // Función para abrir el reporte PDF institucional en una nueva pestaña
+
   imprimirOrden(id: number): void {
-    // Apuntamos al endpoint público que creamos en la línea 10 de tu api.php
     const urlReporte = `http://localhost:8000/api/ordenes/${id}/pdf`;
-    
-    // Abre el visor de PDF nativo del navegador sin cerrar tu Dashboard oscuro
     window.open(urlReporte, '_blank');
   }
 }
-

@@ -19,5 +19,9 @@ export class EmpresaService {
   getEmpresas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
-}
 
+  // NUEVO: Método para enviar la petición POST a Laravel persistiendo en Postgres
+  guardarEmpresa(datos: { empresa: string; nit: string }): Observable<any> {
+    return this.http.post<any>(this.apiUrl, datos, { headers: this.getHeaders() });
+  }
+}

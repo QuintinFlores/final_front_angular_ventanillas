@@ -72,7 +72,6 @@
   font-size: 14px;
 }
 
-
 .table-header {
   display: flex;
   justify-content: flex-end;
@@ -104,7 +103,6 @@
   margin-right: 4px;
 }
 
-
 .flex-header {
   display: flex;
   justify-content: space-between;
@@ -115,7 +113,6 @@
 .w-full { width: 100% !important; }
 .mr-2 { margin-right: 8px; }
 
-/* Badges para el Estado */
 .status-badge {
   padding: 4px 8px;
   border-radius: 4px;
@@ -126,7 +123,6 @@
 .badge-entregado { background-color: #d1fae5; color: #059669; }
 .badge-anulado { background-color: #fee2e2; color: #dc2626; }
 
-/* Estilos personalizados para emular el formulario de tu captura */
 ::ng-deep .formulario-oscuro-dialog .p-dialog-content {
   background-color: #111827 !important;
   color: #f3f4f6 !important;
@@ -180,7 +176,6 @@
 .text-orange { color: #f97316; }
 .text-muted { color: #6b7280; }
 
-/* Inputs y Dropdowns Adaptados a modo oscuro */
 ::ng-deep .p-dropdown {
   background: #1f2937 !important;
   border: 1px solid #374151 !important;
@@ -193,7 +188,6 @@
   color: white !important;
 }
 
-/* Caja de Total */
 .total-display-box {
   background-color: #1e3a8a;
   border-radius: 6px;
@@ -234,7 +228,6 @@
   display: block;
 }
 
-/* Estilos del Grupo de Inputs alineados con el botón + Nuevo */
 .input-with-btn-group {
   display: flex;
   gap: 10px;
@@ -255,7 +248,6 @@
   border-color: #4b5563 !important;
 }
 
-/* Inputs y Dropdowns pulidos del Modal */
 ::ng-deep .input-dark-element-refined {
   background-color: #181f2f !important;
   border: 1px solid #243046 !important;
@@ -277,7 +269,6 @@
   text-align: center;
 }
 
-/* Alineaciones y Cajas Visuales Compactas */
 .text-right-val {
   text-align: right;
   width: 100%;
@@ -298,7 +289,6 @@
   font-size: 15px;
 }
 
-/* Caja de Total Refinada */
 .total-display-box-refined {
   background-color: #0c1524;
   border-radius: 6px;
@@ -324,7 +314,6 @@
   color: #3b82f6;
 }
 
-/* Contenedor del Campo Verde del Literal */
 .literal-container-box {
   margin-top: 5px;
 }
@@ -343,7 +332,6 @@
   font-size: 15px;
 }
 
-/* Botones Inferiores Refinados */
 .actions-row-refined {
   display: flex;
   justify-content: flex-end;
@@ -364,18 +352,14 @@
   border-color: #2563eb !important;
 }
 
-/* Forzar que el panel del dropdown flote por encima de los marcos del diálogo */
 ::ng-deep .p-dropdown-panel {
   z-index: 999999 !important;
-  background-color: #1e293b !important; /* Mismo tono oscuro del formulario */
+  background-color: #1e293b !important; 
   border: 1px solid #334155 !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
 }
 
-
-/* --- LÍNEAS NUEVAS PARA EVITAR EL DESBORDE DE TEXTOS LARGOS --- */
-
-/* 1. Asegurar que el contenedor flexible no deje que el dropdown crezca infinitamente */
+/* --- LINEAS PARA EVITAR EL DESBORDE DE TEXTOS LARGOS --- */
 .input-with-btn-group {
   display: flex;
   gap: 10px;
@@ -383,14 +367,12 @@
   width: 100%;
 }
 
-/* 2. Forzar al dropdown a ocupar el espacio disponible pero sin salirse del modal */
 ::ng-deep .formulario-oscuro-dialog .p-dropdown {
   width: 100% !important;
-  max-width: 630px !important; /* Limita estrictamente el ancho horizontal */
+  max-width: 630px !important; 
   min-width: 0 !important;
 }
 
-/* 3. Obligar al texto del arancel seleccionado a dar saltos de línea hacia abajo */
 ::ng-deep .formulario-oscuro-dialog .p-dropdown .p-dropdown-label {
   white-space: normal !important;
   word-break: break-word !important;
@@ -400,253 +382,53 @@
   overflow-y: auto;
 }
 
-/* 4. Evitar que la lista flotante que se despliega se estire horizontalmente */
-::ng-deep .p-dropdown-panel {
+::ng-deep .formulario-oscuro-dialog .p-dropdown-panel {
   max-width: 630px !important;
 }
-::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  white-space: normal !important;
-  word-break: break-word !important;
-}
 
-
-/* --- CORRECCIÓN DEFINITIVA DE CABECERA COMPACTA --- */
-
-/* Asegura que la fila superior sea un contenedor flexible ordenado */
-.form-row-inline {
+/* MODIFICACION: Estilos para el Modal secundario de Empresas */
+.sub-modal-dark .setup-gap {
   display: flex;
+  flex-direction: column;
   gap: 15px;
-  width: 100%;
-  margin-bottom: 15px;
+  padding-top: 10px;
 }
 
-/* Fuerza a que cada recuadro ocupe exactamente la mitad del espacio */
-.form-row-inline .field-box.visual-box {
-  flex: 1 !important;
-  min-width: 0 !important;
+.sub-modal-dark label {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
 }
 
-/* Alinea el texto de la ventanilla hacia la derecha de su recuadro de forma estética */
-.text-right-val {
-  text-align: right !important;
-  width: 100%;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-/* Controla que el recuadro de la fecha mantenga su proporción derecha */
-.calendar-dark-box {
-  flex: 1 !important;
-}
-
-
-/* Caja editable de Código Misa en Modo Oscuro */
-.input-dark-misa {
-  background: transparent !important;
-  border: none !important;
-  color: #f87171 !important;
-  font-size: 15px !important;
-  font-weight: bold !important;
-  padding: 0 !important;
-  margin-top: 2px;
-  width: 100%;
-}
-.input-dark-misa:focus {
-  outline: none !important;
-  box-shadow: none !important;
-  border-bottom: 1px dashed #3b82f6 !important; /* Línea sutil azul al hacer clic para saber que es editable */
-}
-
-/* Botón Limpiar en Modo Oscuro Lineal */
-.corporate-clear-btn {
-  border: 1px solid #f59e0b !important; /* Borde amarillo/ámbar sutil */
-  color: #f59e0b !important;
-  background: transparent !important;
-  font-weight: 600 !important;
+.sub-modal-dark input {
+  padding: 10px 14px !important;
   font-size: 13px !important;
-  padding: 10px 18px !important;
-  border-radius: 6px !important;
-  transition: background-color 0.2s;
-}
-.corporate-clear-btn:hover {
-  background-color: rgba(245, 158, 11, 0.1) !important; /* Destello sutil al pasar el mouse */
+  width: 100%;
 }
 
 
-/* --- ESTILOS OSCUROS PARA EL DIÁLOGO DE CONFIRMACIÓN --- */
-::ng-deep .confirmacion-oscura-dialog .p-dialog-content {
-  background-color: #1e293b !important; /* Gris azulado oscuro */
-  color: #f8fafc !important;
-  padding: 20px !important;
-  font-size: 14px;
-}
-::ng-deep .confirmacion-oscura-dialog .p-dialog-header {
-  background-color: #1e293b !important;
-  color: #ffffff !important;
-  border-bottom: none !important;
-  padding: 15px 20px 0 20px !important;
-}
-::ng-deep .confirmacion-oscura-dialog .p-dialog-footer {
-  background-color: #1e293b !important;
-  border-top: none !important;
-  padding: 10px 20px 20px 20px !important;
-}
-::ng-deep .confirmacion-oscura-dialog .p-dialog-footer .p-button-warning {
-  background-color: #f97316 !important; /* Color naranja/botón de advertencia */
-  border-color: #f97316 !important;
-  color: #ffffff !important;
-  font-weight: 600;
-}
-
-/* --- ALINEACIÓN DEL BUSCADOR AL LADO DEL BOTÓN VERDE --- */
-
-/* Agrupa el buscador y el botón en una fila flexible y centrada */
+/* Empuja el bloque del buscador y el botón "Nueva Orden" hacia la extrema derecha */
 .header-actions-group {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 15px; /* Espacio exacto de separación entre el buscador naranja y el botón */
+  gap: 15px; /* Mantiene la separación fluida entre el buscador y el botón verde */
 }
 
-/* Caja de entrada de texto con borde naranja/fuego de tu captura */
-.search-input-orange {
-  border-radius: 8px !important;
-  padding-left: 35px !important;
-  background-color: #111827 !important;
-  border: 1px solid #f97316 !important;
-  color: #ffffff !important;
-  font-size: 13px !important;
-  width: 250px;
-  height: 38px;
-  display: inline-block !important;
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-
-
-/* Efecto de resplandor cuando el operador hace clic para escribir */
-.search-input-orange:focus {
-  outline: none !important;
-  border-color: #ea580c !important;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
-}
-
-/* Icono de lupa adaptado en gris claro elegante */
-.search-bar-icon-orange {
-  color: #94a3b8 !important;
-  left: 12px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important; /* Centra la lupa verticalmente en la caja */
-}
-
-/* Fuerza a que el título se quede a la izquierda y el grupo de botones viaje a la derecha */
+/* Convierte la cabecera en un contenedor Flexbox para poder distribuir los elementos */
 .workspace-header {
   display: flex;
-  justify-content: space-between; /* Esto empuja los botones a la extrema derecha */
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
   width: 100%;
 }
 
-/* El grupo de botones mantiene su unión */
+/* Fuerza al grupo de acciones a alinearse por completo al extremo derecho */
 .header-actions-group {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 15px;
-}
-
-/* Asegura el color verde del botón y su tipografía oscura/legible */
-::ng-deep .action-main-btn.p-button-success {
-  background-color: #10b981 !important; /* Verde esmeralda premium */
-  border-color: #10b981 !important;
-  color: #0f172a !important; /* Texto oscuro para que resalte perfecto */
-  font-weight: 700 !important;
-}
-::ng-deep .action-main-btn.p-button-success:hover {
-  background-color: #059669 !important; /* Verde un poco más oscuro al pasar el mouse */
-  border-color: #059669 !important;
-}
-
-
-/* --- RECUPERACIÓN DE ESTILOS PREMIUM PARA MONTOS Y ESTADOS --- */
-
-/* 1. Forzar el Monto Total en Verde Éxito, Negrita y más Grande */
-.amount-currency-value {
-  font-weight: 700 !important;
-  color: #10b981 !important; /* Verde esmeralda brillante */
-  font-size: 14px !important;
-}
-
-/* 2. Estilo Base para los Badges Corporativos de Estado (Redondeados) */
-.corporate-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 4px 12px !important;
-  border-radius: 20px !important; /* Totalmente redondeado estilo píldora */
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px;
-}
-
-/* 3. Punto de Luz Interno para el Badge */
-.badge-dot {
-  width: 6px !important;
-  height: 6px !important;
-  border-radius: 50% !important;
-  display: inline-block;
-}
-
-/* 4. Variación de Color: ENTREGADO (Verde Suave con Texto Oscuro) */
-.badge-state-entregado {
-  background-color: #064e3b !important; /* Fondo verde oscuro opaco */
-  color: #34d399 !important; /* Texto verde esmeralda brillante */
-  border: 1px solid #047857 !important;
-}
-.badge-state-entregado .badge-dot {
-  background-color: #10b981 !important; /* Punto brillante */
-}
-
-/* 5. Variación de Color: PENDIENTE (Amarillo/Naranja Corporativo) */
-.badge-state-pendiente {
-  background-color: #78350f !important; /* Fondo ámbar oscuro opaco */
-  color: #fbbf24 !important; /* Texto amarillo brillante */
-  border: 1px solid #b45309 !important;
-}
-.badge-state-pendiente .badge-dot {
-  background-color: #f59e0b !important; /* Punto brillante */
-}
-
-/* 6. Variación de Color: ANULADO (Por si se usa a futuro) */
-.badge-state-anulado {
-  background-color: #7f1d1d !important;
-  color: #fca5a5 !important;
-  border: 1px solid #b91c1c !important;
-}
-.badge-state-anulado .badge-dot {
-  background-color: #ef4444 !important;
-}
-
-
-/* Icono de lupa perfectamente centrado verticalmente en la caja naranja */
-.search-bar-icon-orange {
-  color: #94a3b8 !important;
-  left: 12px !important;
-  top: 50% !important; /* Baja la lupa exactamente a la mitad */
-  transform: translateY(-50%) !important; /* Compensa su propio tamaño para un centrado matemático */
-  margin-top: 0 !important; /* Elimina cualquier empuje por defecto de PrimeNG */
-}
-
-
-/* --- BOTÓN IMPRIMIR EN ACCIONES DE LA TABLA --- */
-::ng-deep .btn-table-print {
-  width: 32px !important;
-  height: 32px !important;
-  color: #38bdf8 !important; /* Celeste/azul claro premium */
-  padding: 0 !important;
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-::ng-deep .btn-table-print:hover {
-  background-color: rgba(56, 189, 248, 0.1) !important; /* Destello sutil azul */
-  transform: scale(1.08); /* Crece un milímetro al posarse encima */
 }
