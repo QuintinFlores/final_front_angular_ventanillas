@@ -2,7 +2,9 @@
   <!-- Barra Superior -->
   <header class="top-bar">
     <div class="brand">
-      <i class="pi pi-wallet brand-icon"></i>
+      
+      <img src="img/logo_agemed_blanco.png" alt="Logo AGEMED" class="brand-logo-img">
+>
       <span>SISTEMA DE ÓRDENES DE PAGO</span>
     </div>
     <div class="user-info" *ngIf="usuarioActivo">
@@ -71,9 +73,19 @@
               <span class="order-number-badge">#{{ orden.numero_orden }}</span>
             </td>
             <td class="text-secondary-data">
-              <i class="pi pi-calendar-times icon-inline"></i>
-              {{ orden.fecha | date:'dd/MM/yyyy' }}
-            </td>
+  <!-- Agrupamos en una columna flex para poner la hora debajo -->
+  <div class="flex flex-column">
+    <div>
+      <i class="pi pi-calendar-times icon-inline"></i>
+      {{ orden.fecha | date:'dd/MM/yyyy' }}
+    </div>
+    <!-- NUEVO: Hora y minuto en letra pequeña gris -->
+    <span class="block text-11 text-muted-pad" style="margin-top: 3px; padding-left: 18px;">
+      {{ orden.fecha | date:'HH:mm' }} hrs.
+    </span>
+  </div>
+  </td>
+
             <td>
               <div class="company-name-cell">
                 <span class="company-title">{{ orden.empresa?.razon_social }}</span>
@@ -140,11 +152,19 @@
         <div class="field-box visual-box">
           <label>FECHA DE EMISIÓN</label>
           <div class="box-value justify-between-val">
-            <span>{{ fechaActual }}</span>
+            <div class="flex flex-column">
+              <!-- Fecha Principal -->
+              <span>{{ fechaActual }}</span>
+              <!-- NUEVO: Hora y minuto en letra pequeña abajo -->
+              <span class="block text-11 text-muted-pad" style="margin-top: 4px;">
+                Hora Emisión: {{ horaActual }} hrs.
+              </span>
+            </div>
             <i class="pi pi-calendar text-muted"></i>
           </div>
         </div>
       </div>
+
       
       <p class="section-title">IDENTIFICACIÓN</p>
       <div class="form-row-inline">

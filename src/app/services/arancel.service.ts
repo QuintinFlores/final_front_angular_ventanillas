@@ -16,4 +16,12 @@ export class ArancelService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any[]>(`${this.apiUrl}/aranceles`, { headers });
   }
+
+  // NUEVO MÉTODO: Consulta el código MISA correlativo que generará Laravel
+  getSiguienteSecuencial(arancelId: number): Observable<any> {
+    const token = localStorage.getItem('auth_token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/aranceles/${arancelId}/siguiente-secuencial`, { headers });
+  }
 }
+

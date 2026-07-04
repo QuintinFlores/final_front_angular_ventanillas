@@ -47,8 +47,9 @@ export class DashboardComponent implements OnInit {
   nuevoNitEmpresa: string = '';
   guardandoEmpresa: boolean = false;
 
-  // 2. Variables del Formulario
+    // 2. Variables del Formulario
   fechaActual: string = new Date().toLocaleDateString('es-ES');
+  horaActual: string = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
   empresaSeleccionada: any = null;
   arancelSeleccionado: any = null;
   codigoMisa: string = '';
@@ -56,6 +57,7 @@ export class DashboardComponent implements OnInit {
   cantidad: number = 1;
   montoTotal: number = 0;
   textoLiteral: string = 'SON: CERO 00/100 BOLIVIANOS'; 
+
 
   constructor(
     private authService: AuthService,
@@ -92,9 +94,12 @@ export class DashboardComponent implements OnInit {
     this.empresaService.getEmpresas().subscribe((data: any) => this.empresas = data);
   }
 
-  abrirFormulario(): void {
+    abrirFormulario(): void {
+    // NUEVO: Refresca la hora exacta al abrir la ventana emergente
+    this.horaActual = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
     this.displayFormulario = true;
   }
+
 
   // MODIFICACIÓN: Funciones para el control de la ventana modal de Empresas
   abrirModalEmpresa(): void {
@@ -147,13 +152,29 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  calcularTotal(): void {
+   calcularTotal(): void {
     if (this.arancelSeleccionado) {
       this.montoTotal = this.arancelSeleccionado.monto * this.cantidad;
-      this.codigoMisa = this.arancelSeleccionado.codigo_arancel; 
       this.textoLiteral = 'SON: ' + this.numeroALetras(this.montoTotal);
+      
+      // CAMBIO: Indicamos visualmente que el código se está generando
+      this.codigoMisa = 'Generando código...'; 
+
+      // Conectamos con el servicio para traer el formato dinámico (Ej: AC100-78-2026)
+      this.arancelService.getSiguienteSecuencial(this.arancelSeleccionado.id).subscribe({
+        next: (res: any) => {
+          this.codigoMisa = res.codigo_misa;
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.codigoMisa = 'Error al generar';
+        }
+      });
+    } else {
+      this.codigoMisa = '';
     }
   }
+
 
   limpiarFormulario(): void {
     this.empresaSeleccionada = null;
@@ -182,8 +203,11 @@ export class DashboardComponent implements OnInit {
           arancel_id: this.arancelSeleccionado.id,
           cantidad: this.cantidad,
           descripcion: this.descripcion,
+
+          // CAMBIO: Enviamos el código exacto que previsualizó el operador
           codigo_misa: this.codigoMisa
         };
+
 
         this.ordenService.guardarOrden(nuevaOrden).subscribe({
           next: () => {

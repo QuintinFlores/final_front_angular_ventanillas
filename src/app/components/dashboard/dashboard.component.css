@@ -432,3 +432,122 @@
   align-items: center;
   gap: 15px;
 }
+/* Forzar el color naranja llamativo en el campo Código MISA aunque sea de solo lectura */
+.input-dark-misa.text-orange-num,
+.input-dark-misa[readonly],
+.input-dark-misa:disabled {
+    color: #f06a50 !important; /* El color salmón/naranja de la tuerca */
+    background-color: #1e293b !important; /* Mantiene el fondo oscuro del formulario */
+    opacity: 1 !important; /* Evita que el navegador lo ponga opaco o transparente */
+    border-color: #334155 !important; /* Controla el borde para que no se altere */
+}
+
+/* Forzar que el Código MISA mantenga el mismo color salmón brillante que el bloque automático */
+input.input-dark-misa[readonly],
+input.input-dark-misa:disabled {
+  color: #f87171 !important; /* Mismo color salmón/naranja de la clase .text-orange-num */
+  background-color: #1f2937 !important; /* Mismo fondo oscuro de la clase .visual-box */
+  border: 1px solid #374151 !important; /* Borde sutil del formulario */
+  opacity: 1 !important; /* Evita que el navegador reduzca la opacidad del texto */
+  cursor: not-allowed; /* Indicador visual de que el campo está protegido */
+}
+/* Creamos la clase para el input y forzamos el color salmón de la izquierda */
+.input-dark-misa {
+  background-color: #1f2937 !important; /* Mismo fondo que el bloque Automático */
+  border: 1px solid #374151 !important; /* Borde sutil del formulario */
+  color: #f87171 !important; /* Color salmón exacto de .text-orange-num */
+  font-size: 15px !important;
+  font-weight: bold !important;
+}
+
+/* Aseguramos que se mantenga el color incluso si el navegador intenta bloquearlo por ser readonly */
+.input-dark-misa[readonly],
+.input-dark-misa:disabled {
+  color: #f87171 !important;
+  background-color: #1f2937 !important;
+  opacity: 1 !important; /* Evita que el navegador lo ponga opaco o transparente */
+  cursor: not-allowed;
+}
+
+/* Aplicar el color verde al monto total en el historial general */
+.amount-currency-value {
+  color: #10b981 !important; /* El color verde esmeralda de tu diseño */
+  font-weight: bold !important;
+  font-size: 14px;
+}
+
+
+/* Estilo base para las pastillas de estado (Badges) */
+.corporate-badge {
+  display: inline-block;
+  padding: 6px 16px !important; /* Espaciado interno horizontal y vertical */
+  border-radius: 20px !important; /* Bordes completamente redondeados como la imagen */
+  font-size: 13px !important;
+  font-weight: 600 !important; /* Texto seminegrita */
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: none !important; /* Quitamos bordes raros */
+}
+
+/* Ocultamos el puntito clásico si es que te estorba con el nuevo diseño */
+.corporate-badge .badge-dot {
+  display: none !important;
+}
+
+/* Estado ENTREGADO (Estilo idéntico a INSTOCK de tu imagen) */
+.badge-state-entregado {
+  background-color: #e6fcf5 !important; /* Fondo verde menta muy claro */
+  color: #0ca678 !important; /* Texto verde oscuro contrastante */
+}
+
+/* Estado PENDIENTE (Estilo adaptado en tonos amarillos/naranjas) */
+.badge-state-pendiente {
+  background-color: #fff9db !important; /* Fondo amarillo muy claro */
+  color: #f59f00 !important; /* Texto amarillo oscuro / ocre */
+}
+
+/* Estado ANULADO (Estilo adaptado en tonos rojos) */
+.badge-state-anulado {
+  background-color: #fff5f5 !important; /* Fondo rojo muy claro */
+  color: #f03e3e !important; /* Texto rojo oscuro */
+}
+/* Forzar el color salmón brillante en los códigos MISA del historial general */
+.misa-code-box {
+  color: #f87171 !important; /* El color salmón/naranja exacto del formulario */
+  font-weight: 600 !important; /* Le da un grosor seminegrita para que resalte más */
+}
+
+/* Asegurar que el icono de la etiqueta (tag) también cambie de color */
+.misa-code-box i {
+  color: #f87171 !important;
+}
+
+
+/* Corregir el contraste del título principal sobre el fondo blanco */
+.section-main-title {
+  color: #0f172a !important; /* Un tono azul oscuro/pizarra muy elegante */
+  font-weight: 700 !important; /* Negrita bien definida */
+}
+
+
+/* Estilo para ajustar el tamaño del logo institucional en la barra */
+.brand-logo-img {
+  height: 45px; /* Altura ideal para que no desborde la barra superior */
+  width: auto;  /* Mantiene la proporción original de la imagen */
+  object-fit: contain;
+}
+
+/* Espaciado y alineación del bloque de marca */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Separación elegante entre el logo y el texto del título */
+}
+
+/* Estilo del texto del título al lado del logo */
+.system-title-text {
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
