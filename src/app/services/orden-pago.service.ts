@@ -24,4 +24,13 @@ export class OrdenPagoService {
   guardarOrden(orden: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, orden, { headers: this.getHeaders() });
   }
+
+  // FUNCIÓN PARA EXCEL: Llama a Laravel de forma segura
+  exportarExcel(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/exportar/excel`, {
+      headers: this.getHeaders(),
+      responseType: 'blob'
+    });
+  }
 }
+

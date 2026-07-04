@@ -220,6 +220,24 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+  exportarAExcel(): void {
+    this.ordenService.exportarExcel().subscribe({
+      next: (blob: Blob) => {
+        // Lógica nativa de JavaScript para descargar el archivo en tu navegador
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Reporte_Ordenes_Pago_${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+
+        // Limpieza de memoria
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Error al descargar el reporte de Excel', err)
+    });
+  }
 
   onLogout(): void {
     this.authService.logout().subscribe({

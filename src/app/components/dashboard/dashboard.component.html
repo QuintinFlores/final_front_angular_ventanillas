@@ -24,24 +24,24 @@
         </div>
         
         <div class="header-actions-group">
+          <!-- Tu buscador actual -->
           <span class="p-input-icon-left filter-company-box">
             <i class="pi pi-search search-bar-icon-orange"></i>
-            <input 
-              pInputText 
-              type="text" 
-              (input)="dt.filter($any($event.target).value, 'empresa.razon_social', 'contains')" 
-              placeholder="Buscar por Empresa..." 
-              class="p-inputtext-sm search-input-orange"/>
+            <input pInputText type="text" (input)="dt.filter($any($event.target).value, 'empresa.razon_social', 'contains')"
+              placeholder="Buscar por Empresa..." class="p-inputtext-sm search-input-orange" />
           </span>
-
-          <button 
-            pButton 
-            icon="pi pi-plus-circle" 
-            label="Nueva Orden de Pago" 
-            class="p-button-rounded p-button-success action-main-btn" 
-            (click)="abrirFormulario()">
+        
+          <!-- NUEVO: Botón de Exportar a Excel con PrimeNG -->
+          <button pButton icon="pi pi-file-excel" label="Exportar Excel"
+            class="p-button-rounded p-button-help p-button-sm font-semibold" (click)="exportarAExcel()">
           </button>
-        </div> 
+        
+          <!-- Tu botón verde actual -->
+          <button pButton icon="pi pi-plus-circle" label="Nueva Orden de Pago"
+            class="p-button-rounded p-button-success action-main-btn" (click)="abrirFormulario()">
+          </button>
+        </div>
+
       </div>
 
       <p-table 
