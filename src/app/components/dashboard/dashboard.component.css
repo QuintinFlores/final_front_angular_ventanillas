@@ -551,3 +551,75 @@ input.input-dark-misa:disabled {
   letter-spacing: 0.5px;
   color: #ffffff;
 }
+/* Usamos ::ng-deep para asegurarnos de que el estilo afecte al modal flotante */
+:host ::ng-deep .modal-content,
+:host ::ng-deep .mat-mdc-dialog-container,
+:host ::ng-deep .ngx-smart-modal { /* Reemplaza por la clase real de tu modal si la conoces */
+  background-color: #051d38 !important;
+  border: 1px solid #0a2d54 !important;
+}
+
+
+/* Botón Nueva Orden de Pago: Color Naranja del botón Limpiar */
+.btn-nueva-orden, /* Reemplaza por la clase o ID real de tu botón verde */
+button.btn-success { 
+  background-color: #d97706 !important;
+  border-color: #b45309 !important;
+  color: #ffffff !important;
+}
+
+/* Efecto hover elegante para el botón naranja */
+.btn-nueva-orden:hover,
+button.btn-success:hover {
+  background-color: #b45309 !important;
+}
+
+/* Botón Exportar Excel: Color Verde Oficial de Microsoft Excel */
+.btn-exportar-excel, /* Reemplaza por la clase o ID real de tu botón morado */
+button.btn-primary { 
+  background-color: #107c41 !important;
+  border-color: #0a5c30 !important;
+  color: #ffffff !important;
+}
+
+/* Efecto hover elegante para el botón de Excel */
+.btn-exportar-excel:hover,
+button.btn-primary:hover {
+  background-color: #0a5c30 !important;
+}
+
+
+/* ==========================================================================
+   CAMBIO DE COLORES INSTITUCIONALES PARA LOS BOTONES DE LA BARRA SUPERIOR
+   ========================================================================== */
+
+/* 1. Botón "Exportar Excel": Forzar el verde oficial de Microsoft Excel */
+.header-actions-group ::ng-deep button[label="Exportar Excel"],
+.header-actions-group ::ng-deep .p-button-primary,
+.header-actions-group ::ng-deep .p-button {
+  background-color: #107c41 !important;
+  border-color: #0a5c30 !important;
+  color: #ffffff !important;
+}
+
+/* Efecto Hover para el botón de Excel */
+.header-actions-group ::ng-deep button[label="Exportar Excel"]:hover,
+.header-actions-group ::ng-deep .p-button-primary:hover {
+  background-color: #0a5c30 !important;
+  border-color: #074322 !important;
+}
+
+/* 2. Botón "Nueva Orden de Pago": Forzar el naranja del botón Limpiar */
+.header-actions-group ::ng-deep button[label="Nueva Orden de Pago"],
+.header-actions-group ::ng-deep .p-button-success {
+  background-color: #d97706 !important;
+  border-color: #b45309 !important;
+  color: #ffffff !important;
+}
+
+/* Efecto Hover para el botón de Nueva Orden */
+.header-actions-group ::ng-deep button[label="Nueva Orden de Pago"]:hover,
+.header-actions-group ::ng-deep .p-button-success:hover {
+  background-color: #b45309 !important;
+  border-color: #92400e !important;
+}

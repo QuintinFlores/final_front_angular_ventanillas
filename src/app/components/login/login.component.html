@@ -1,38 +1,147 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2>Ventanilla Única</h2>
-    <p>Inicie sesión para ingresar al sistema</p>
+<div class="flag-strip">
+  <span class="r"></span><span class="y"></span><span class="g"></span>
+</div>
 
-    <!-- Alerta por si hay un error en las credenciales -->
-    <div class="error-alert" *ngIf="errorMessage">
-      {{ errorMessage }}
+<div class="shell">
+
+  <!-- PANEL IZQUIERDO -->
+  <div class="brand-panel">
+    <ngx-particles
+      [id]="particlesId"
+      class="particles-layer"
+      [options]="particlesOptions">
+    </ngx-particles>
+
+    <img class="seal-watermark" src="/img/logo_agemed_blanco.png" alt="" />
+
+    <div class="brand-top">
+      <div class="agency-mark">
+        <img class="seal-mini" src="/img/logo_agemed_blanco.png" alt="AGEMED" />
+        <div class="names">
+          <div class="full">Agencia Estatal de Medicamentos<br />y Tecnologías en Salud</div>
+          <div class="country">Estado Plurinacional de Bolivia</div>
+        </div>
+      </div>
+
+      <h1 class="headline">Ventanilla <em>Única</em><br />de Trámites</h1>
+      <p class="sub">
+        Acceso restringido al sistema de gestión de órdenes de pago, hojas de ruta y
+        trámites regulatorios de AGEMED.
+      </p>
+      <div class="divider-line"></div>
+
+      <ul class="feature-list">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z" stroke="#3dbd93" stroke-width="1.6"/>
+          </svg>
+          <span><b>Conexión segura.</b> Toda la actividad queda registrada por operador y ventanilla.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="4" width="16" height="16" rx="2" stroke="#3dbd93" stroke-width="1.6"/>
+            <path d="M8 12l3 3 5-6" stroke="#3dbd93" stroke-width="1.6"/>
+          </svg>
+          <span><b>Trazabilidad completa.</b> Órdenes de pago y aranceles auditables en tiempo real.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#3dbd93" stroke-width="1.6"/>
+            <path d="M12 7v5l3 3" stroke="#3dbd93" stroke-width="1.6"/>
+          </svg>
+          <span><b>Disponibilidad.</b> Lunes a viernes, 08:30 – 16:30 (hora de La Paz).</span>
+        </li>
+      </ul>
     </div>
 
-    <!-- Formulario vinculado a la lógica mediante (ngSubmit) -->
-    <form (ngSubmit)="onLogin()">
-      <div class="form-group">
-        <label for="username">Usuario</label>
-        <input 
-          type="text" 
-          id="username" 
-          name="username" 
-          [(ngModel)]="username" 
-          placeholder="Ingrese su usuario" 
-          required>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          [(ngModel)]="password_hash" 
-          placeholder="Ingrese su contraseña" 
-          required>
-      </div>
-
-      <button type="submit" class="btn-login">Ingresar</button>
-    </form>
+    <div class="brand-footer">
+      <span>© 2026 AGEMED — Todos los derechos reservados</span>
+      <span class="code">SYS/VU-01</span>
+    </div>
   </div>
+
+  <!-- PANEL DERECHO -->
+  <div class="form-panel">
+    <div class="card">
+      
+
+      <div class="card-eyebrow"></div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="field">
+          <label for="usuario">Usuario</label>
+          <div class="input-wrap">
+            <svg class="icon-left" width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+            <input id="usuario" type="text" formControlName="usuario"
+                   placeholder="Ingrese su usuario" autocomplete="username" />
+          </div>
+          @if (form.get('usuario')?.invalid && form.get('usuario')?.touched) {
+            <span class="field-error">El usuario es obligatorio.</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <div class="input-wrap">
+            <svg class="icon-left" width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+            <input [type]="showPassword() ? 'text' : 'password'" id="password"
+                   formControlName="password"
+                   placeholder="Ingrese su contraseña" autocomplete="current-password" />
+            <button type="button" class="toggle-pass" (click)="togglePassword()" aria-label="Mostrar contraseña">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </button>
+          </div>
+          @if (form.get('password')?.invalid && form.get('password')?.touched) {
+            <span class="field-error">La contraseña es obligatoria.</span>
+          }
+        </div>
+
+        <div class="row-between">
+          <label class="remember">
+            <input type="checkbox" formControlName="recordar" /> Recordar usuario
+          </label>
+          <a href="#" class="link">¿Olvidó su contraseña?</a>
+        </div>
+
+        @if (errorMsg()) {
+          <div class="error-banner">{{ errorMsg() }}</div>
+        }
+
+        <button type="submit" class="submit" [disabled]="loading()">
+          @if (!loading()) {
+            <span>Ingresar</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          } @else {
+            <span>Verificando…</span>
+          }
+        </button>
+      </form>
+
+      <div class="security-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <span>
+          Este es un sistema oficial de AGEMED. El acceso no autorizado está sujeto a las
+          sanciones establecidas por la normativa vigente del Estado Plurinacional de Bolivia.
+        </span>
+      </div>
+
+     
+    </div>
+  </div>
+
 </div>
+

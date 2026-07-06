@@ -11,3 +11,19 @@ body {
   background-color: #0f172a; /* Fondo azul oscuro profundo institucional */
   color: #f8fafc;
 }
+
+/* Corrección definitiva para el fondo del modal en los estilos globales */
+.cdk-overlay-pane,
+.mat-mdc-dialog-container,
+.mat-mdc-dialog-surface,
+.modal-content,
+.dialog-box {
+  background-color: #051d38 !important;
+  background: #051d38 !important;
+}
+
+/* Opcional: Si quieres que el borde del modal combine con el fondo */
+.mat-mdc-dialog-surface {
+  border: 1px solid #0a2d54 !important;
+  border-radius: 8px !important; /* Mantiene las esquinas redondeadas */
+}

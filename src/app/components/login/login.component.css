@@ -1,84 +1,506 @@
-.login-container {
+:host {
+  --blue-950:#081b2c;
+  --blue-900:#0b2a45;
+  --blue-800:#0f3d63;
+  --blue-700:#154d7d;
+  --green:#049c6b;
+  --green-light:#3dbd93;
+  --paper:#f7f9fa;
+  --paper-2:#eef1f4;
+  --ink:#10202e;
+  --slate:#5b6b7a;
+  --slate-soft:#8a97a3;
+  --line:#dfe5ea;
+  --red-bolivia:#d52b1e;
+  --gold:#f9c700;
+  --green-bolivia:#007934;
+  --focus:#0f3d63;
+
+  display:block;
+  font-family:'Inter', sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  min-height:100vh;
+}
+
+* { box-sizing:border-box; }
+
+/* franja tricolor institucional */
+.flag-strip{
+  height:5px;
+  width:100%;
+  display:flex;
+}
+.flag-strip span{flex:1;}
+.flag-strip .r{background:var(--red-bolivia);}
+.flag-strip .y{background:var(--gold);}
+.flag-strip .g{background:var(--green-bolivia);}
+
+.shell{
+  min-height:calc(100vh - 5px);
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+}
+
+/* ---------- PANEL IZQUIERDO ---------- */
+.brand-panel{
+  position:relative;
+  background:
+    radial-gradient(1100px 700px at -10% -10%, var(--blue-800), transparent 60%),
+    linear-gradient(160deg, var(--blue-950) 0%, var(--blue-900) 55%, var(--blue-800) 100%);
+  color:#eaf1f6;
+  padding:56px 64px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.seal-watermark{
+  position:absolute;
+  right:-70px;
+  bottom:-70px;
+  width:460px;
+  height:460px;
+  object-fit:contain;
+  opacity:0.13;
+  pointer-events:none;
+}
+
+.brand-top{position:relative; z-index:2;}
+.agency-mark{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:44px;
+}
+.seal-mini{width:52px;height:52px;flex-shrink:0;object-fit:contain;}
+.agency-mark .names{line-height:1.15;}
+.agency-mark .full{
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#a9c3d6;
+  font-weight:600;
+}
+.agency-mark .country{
+  font-size:11px;
+  color:#7fa0ba;
+  margin-top:2px;
+}
+
+.headline{
+  font-family:'Source Serif 4', serif;
+  font-size:44px;
+  line-height:1.12;
+  font-weight:600;
+  max-width:460px;
+  margin:0 0 18px;
+  letter-spacing:-0.01em;
+}
+.headline em{
+  font-style:normal;
+  color:var(--green-light);
+}
+.sub{
+  font-size:15.5px;
+  color:#b6cbdb;
+  max-width:400px;
+  line-height:1.6;
+}
+
+.divider-line{
+  width:56px;height:3px;background:var(--green);
+  margin:28px 0 26px;border-radius:2px;
+}
+
+.feature-list{
+  list-style:none;
+  margin:0; padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  position:relative;
+  z-index:2;
+}
+.feature-list li{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  font-size:13.5px;
+  color:#c3d4e1;
+  line-height:1.5;
+}
+.feature-list svg{flex-shrink:0; margin-top:2px;}
+.feature-list b{color:#eaf1f6; font-weight:600;}
+
+.brand-footer{
+  position:relative; z-index:2;
+  font-size:11.5px;
+  color:#6f8ea4;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:20px;
+}
+.brand-footer .code{
+  font-family:'IBM Plex Mono', monospace;
+  letter-spacing:.03em;
+  color:#8fa9bd;
+}
+
+/* ---------- PANEL DERECHO ---------- */
+.form-panel{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+  background:var(--paper);
+}
+.card{
+  width:100%;
+  max-width:400px;
+}
+.card-logo{
+  height:64px;
+  width:auto;
+  display:block;
+  margin-bottom:22px;
+}
+.card-eyebrow{
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:10px;
+}
+.card h1{
+  font-family:'Source Serif 4', serif;
+  font-size:28px;
+  font-weight:600;
+  margin:0 0 8px;
+  color:var(--ink);
+}
+.card p.lead{
+  color:var(--slate);
+  font-size:14.5px;
+  margin:0 0 32px;
+  line-height:1.5;
+}
+
+form{display:flex; flex-direction:column; gap:20px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:7px;
+}
+.input-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.input-wrap svg.icon-left{
+  position:absolute; left:14px;
+  color:var(--slate-soft);
+  pointer-events:none;
+}
+input{
+  width:100%;
+  height:46px;
+  border:1.5px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:0 42px 0 42px;
+  font-size:14.5px;
+  font-family:'Inter', sans-serif;
+  color:var(--ink);
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+input::placeholder{color:#a7b2bb;}
+input:focus{
+  outline:none;
+  border-color:var(--focus);
+  box-shadow:0 0 0 3px rgba(15,61,99,0.12);
+}
+.toggle-pass{
+  position:absolute; right:12px;
+  background:none; border:none; cursor:pointer;
+  color:var(--slate-soft);
+  padding:6px;
+  display:flex;
+}
+.toggle-pass:hover{color:var(--slate);}
+
+.field-error{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--red-bolivia);
+}
+
+.row-between{
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:13px;
+  margin-top:-6px;
+}
+.remember{display:flex; align-items:center; gap:8px; color:var(--slate);}
+.remember input[type=checkbox]{
+  width:16px;height:16px; padding:0; accent-color:var(--blue-800); cursor:pointer;
+}
+a.link{color:var(--blue-800); text-decoration:none; font-weight:600;}
+a.link:hover{text-decoration:underline;}
+
+.error-banner{
+  background:#fdecea;
+  border:1px solid #f3b8b2;
+  color:#8a2b23;
+  font-size:13px;
+  padding:10px 12px;
+  border-radius:8px;
+  margin-top:-4px;
+}
+
+button.submit{
+  height:48px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(180deg, var(--blue-800), var(--blue-900));
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  font-family:'Inter', sans-serif;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:6px;
+  transition:filter .15s ease, transform .15s ease, opacity .15s ease;
+  box-shadow:0 8px 20px -8px rgba(11,42,69,0.55);
+}
+button.submit:hover:not(:disabled){filter:brightness(1.08);}
+button.submit:active:not(:disabled){transform:translateY(1px);}
+button.submit:disabled{opacity:0.7; cursor:not-allowed;}
+
+.security-note{
+  display:flex; align-items:flex-start; gap:10px;
+  margin-top:26px;
+  padding:12px 14px;
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:12px;
+  color:var(--slate);
+  line-height:1.5;
+}
+.security-note svg{flex-shrink:0; margin-top:1px; color:var(--green);}
+
+.legal-footer{
+  margin-top:28px;
+  font-size:11.5px;
+  color:var(--slate-soft);
+  text-align:center;
+  line-height:1.6;
+}
+
+@media (max-width: 880px){
+  .shell{grid-template-columns:1fr;}
+  .brand-panel{display:none;}
+  .form-panel{padding:24px;}
+}
+
+:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+
+/* Envía las partículas al fondo absoluto del panel izquierdo sin ocupar espacio real */
+.particles-layer {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Se queda detrás del contenido */
+  pointer-events: none; /* Permite hacer clic en los textos o botones si es necesario */
+}
+
+/* Asegura que el panel izquierdo tenga posición relativa para contener las partículas */
+.brand-panel {
+  position: relative;
+  overflow: hidden; /* Evita que las partículas se desborden de la mitad izquierda */
+}
+
+/* Eleva el contenido del panel izquierdo por encima del fondo de partículas */
+.brand-top,
+.brand-footer,
+.seal-watermark {
+  position: relative;
+  z-index: 1; /* Esto garantiza que los textos y logos se vean sobre las partículas */
+}
+
+
+/* Configuración del contenedor izquierdo */
+.brand-panel {
+  position: relative;
+  overflow: hidden; /* Esto recorta el logo para que no rompa la pantalla */
+}
+
+/* Posicionamiento exacto del logo marca de agua */
+.brand-panel .seal-watermark {
+  position: absolute !important;
+  bottom: -15%; /* Lo empuja hacia abajo para cortarlo */
+  right: -20%;  /* Lo empuja hacia la derecha para cortarlo */
+  width: 70%;   /* Ajusta el tamaño según tu preferencia */
+  height: auto;
+  opacity: 0.08; /* Lo hace sutil para que no tape las letras */
+  z-index: 0;   /* Lo mantiene por detrás del texto principal */
+  pointer-events: none;
+}
+
+.brand-panel {
+  position: relative;
+  overflow: hidden !important; /* Corta cualquier partícula que intente pasarse al lado derecho */
+}
+
+/* Contenedor que agrupa el logo y los textos */
+.agency-mark {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f4f6f9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  gap: 15px; /* Da un espacio elegante entre el logo ampliado y el texto */
 }
 
-.login-card {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
+/* Modifica el tamaño de la imagen del logo */
+.agency-mark .seal-mini {
+  width: 70px !important;  /* Ajusta este valor en píxeles para cambiar el tamaño del logo */
+  height: auto;
 }
 
-.login-card h2 {
-  margin-bottom: 5px;
-  color: #333333;
+/* Amplía el tamaño de las letras de la derecha si lo ves necesario */
+.agency-mark .names .full {
+  font-size: 1.15rem; /* Hace el texto principal un poco más grande */
+  line-height: 1.3;
 }
 
-.login-card p {
-  color: #777777;
-  font-size: 14px;
-  margin-bottom: 25px;
+.agency-mark .names .country {
+  font-size: 0.95rem; /* Hace el texto de "Estado Plurinacional..." más legible */
 }
 
-.form-group {
-  text-align: left;
-  margin-bottom: 20px;
+/* Incrementamos el tamaño del logo */
+.agency-mark .seal-mini {
+  width: 90px !important;  /* Antes estaba alrededor de 65px; esto lo ampliará bastante */
+  height: auto;
 }
 
-.form-group label {
-  display: block;
-  font-size: 14px;
-  color: #555555;
-  margin-bottom: 6px;
-  font-weight: 600;
+/* Alineación perfecta con el logo más grande */
+.agency-mark {
+  display: flex;
+  align-items: center;
+  gap: 18px; /* Un poco más de separación para que no se pegue al texto */
 }
 
-.form-group input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  font-size: 14px;
-  box-sizing: border-box;
+/* Ajuste proporcional para los textos de la derecha */
+.agency-mark .names .full {
+  font-size: 1.25rem; /* Letras un poco más grandes y legibles */
+  font-weight: 600;   /* Les da un toque más firme */
+  line-height: 1.3;
 }
 
-.form-group input:focus {
-  border-color: #007bff;
-  outline: none;
+.agency-mark .names .country {
+  font-size: 1rem;
+  margin-top: 2px;
+}
+.dashboard-container { /* Reemplaza por el nombre real de tu clase contenedora */
+  background-color: #002447 !important;
 }
 
-.btn-login {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
+
+.tu-tabla-cabecera {
+  background-color: #082d54 !important; /* Un azul sutilmente más claro para contrastar la cabecera */
 }
 
-.btn-login:hover {
-  background-color: #0056b3;
+
+/* 1. Definición de la animación en la parte inferior de tu CSS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Empieza un poco más abajo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);    /* Llega a su posición original */
+  }
 }
 
-.error-alert {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  margin-bottom: 20px;
-  border: 1px solid #f5c6cb;
-  text-align: left;
+/* 2. Aplicación del efecto a los paneles */
+.brand-panel {
+  opacity: 0; /* Inicialmente oculto antes de la animación */
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.form-panel {
+  opacity: 0; /* Inicialmente oculto antes de la animación */
+  /* Tiene un retraso de 0.2 segundos (delay) para que aparezca justo después del panel azul */
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 0.2s; 
+}
+
+
+/* 1. Definimos la animación de entrada para el Dashboard */
+@keyframes dashboardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px); /* Un recorrido más corto para que sea más sutil */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 2. Se la aplicamos al contenedor principal de tu dashboard */
+.dashboard-container { /* Usa el nombre real de tu clase contenedora */
+  opacity: 0;
+  animation: dashboardFadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  /* Un tiempo de 0.6s es ideal para que el sistema se sienta rápido y ágil al cargar datos */
+}
+
+/* Asegura que el contenedor de la tabla sea transparente para ver el fondo real */
+.tu-tabla-clase, 
+table {
+  background-color: transparent !important;
+}
+
+/* Cambia el fondo de todas las filas comunes al azul exacto del login */
+table tr, 
+table td {
+  background-color: #002447 !important;
+  color: #ffffff; /* Mantiene el texto en blanco para una lectura clara */
+}
+
+
+/* Fuerza a que las filas intercaladas de Angular o Bootstrap usen el mismo azul */
+table tr:nth-child(odd),
+table tr:nth-child(even) {
+  background-color: #002447 !important;
+}
+
+
+.dashboard-container { /* Reemplaza por el nombre real de tu clase contenedora */
+  background-color: #051d38 !important;
+}
+
+
+table,
+table tr, 
+table td {
+  background-color: #051d38 !important;
+}
+
+/* Fuerza a que las filas intercaladas también usen este fondo */
+table tr:nth-child(odd),
+table tr:nth-child(even) {
+  background-color: #051d38 !important;
+}
+
+.dashboard-container { /* Reemplaza por el nombre real de tu clase */
+  background: linear-gradient(135deg, #0a2d54 0%, #031428 100%) !important;
 }
